@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Customers Enrollment Process</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1>Gym Management</h1>
+		<hr>
+		<h2>Save Program</h2>
+
+		<form action="#" th:action="@{/saveProgram}" th:object="${program}" method="POST" >
+		
+			
+				
+		Program Name		
+		<select th:field="*{programName}" class="form-group col-md-2 rounded" >
+			
+			
+			<option th:each="p : ${programList}" th:text="${p}" th:value="${p}" />		
+		
+		</select><br>
+				
+				<button type="submit" class="btn btn-info col-2"> Save Program</button>
+		</form>
+		
+		<hr>
+		
+		<a th:href = "@{/}"> Back to Program List</a>
+	</div>
+	
+	
+</body>
+</html>

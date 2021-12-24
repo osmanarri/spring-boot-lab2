@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Customers Enrollment Process</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+	
+	<style >
+		
+		h1{
+
+          text-align: center;
+
+
+           }
+	
+	</style>
+	
+</head>
+<body>
+
+<!-- create navigation bar ( header) -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" th:href="@{/}">Gym Management</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Profile</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+	
+	<div class="container my-2">
+	<h1>Select Program</h1>
+	
+	
+	<a th:href = "@{/showNewProgramForm}" class="btn btn-primary btn-sm mb-3"> Add Program </a>
+	
+	
+		<table border="1" class = "table table-striped table-responsive-md">
+			<thead>
+				<tr>						
+					<th>Program Name</th>			
+					<th> Price </th>
+					<th> From </th>
+					<th> To </th>
+					<th> Action</th>
+				</tr>
+			</thead>
+			<tbody>
+					
+					
+					
+		  	<tr th:each="program : ${listPrograms}">
+					<td th:text="${program.programName}"></td>
+					
+					<td th:if="${program.programName} == 'Yoga'">$250</td>
+					<td th:if="${program.programName} == 'Swimming'">$350</td>
+					<td th:if="${program.programName} == 'Bootcamp'">$450</td>
+					<td th:if="${program.programName} == 'Cardio'">$550</td>
+					
+					
+					<td> 
+					
+					<input type="date">
+					
+					</td>
+						<td> 
+					
+					<input type="date">
+					
+					</td>
+					
+					
+				 	
+					<td> <a th:href="@{/showFormForUpdate/{id}(id=${program.id})}" class="btn btn-primary">Update</a>
+					    <a th:href="@{/deleteProgram/{id}(id=${program.id})}" class="btn btn-danger">Delete</a>
+					</td>
+				</tr>
+				
+			</tbody>
+			
+		</table>
+		
+		<a th:href="@{/checkout}" class="btn btn-primary btn-sm mb-3"> Checkout </a>
+		
+		<div th:if = "${totalPages > 1}">
+			<div class = "row col-sm-10">
+				<div class = "col-sm-2">
+					Total Rows: [[${totalItems}]] 
+				</div>
+				<div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+				</div>
+				<div class = "col-sm-1">
+					<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+					<span th:unless="${currentPage < totalPages}">Next</span>
+				</div>
+				
+				 <div class="col-sm-1">
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+					<span th:unless="${currentPage < totalPages}">Last</span>
+   				 </div>
+			</div>
+		</div>
+	</div>
+ </body>
+</html>
